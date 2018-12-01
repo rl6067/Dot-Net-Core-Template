@@ -1,2 +1,5 @@
-# Dot-Net-Core-Template
-.Net Core 2.1 CQRS Pattern with React and Webpack 
+# .Net core project template
+
+## CQRS Pattern using MediatR and Automapper
+
+### Includes React, Webpack and various style libs.
