@@ -11,10 +11,10 @@ module.exports = function (env) {
     var config = {
         mode: isProd ? 'production' : 'development',
         entry: {
-            home: "./FrontEnd/jsx/Containers/Home.jsx"
+            index: "./Src/Index.jsx"
         },
         output: {
-            path: path.join(__dirname, 'wwwroot', 'dist'),
+            path: path.join(__dirname, '../wwwroot', 'dist'),
             filename: '[name].js',
             publicPath: '/dist/'
         },
@@ -27,7 +27,7 @@ module.exports = function (env) {
         },
         devtool: 'eval-source-map',
         plugins: [
-            new BundleAnalyzerPlugin(),
+            //new BundleAnalyzerPlugin(),
             new MiniCssExtractPlugin({ filename: '[name].css' }),
             new webpack.ProvidePlugin({
                 $: "jquery",

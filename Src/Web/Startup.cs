@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -13,10 +14,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Web.Infrastructure.Data;
 
 namespace Web
@@ -46,15 +49,17 @@ namespace Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
+
             services.Configure<RazorViewEngineOptions>(o =>
             {
                 // {2} is area, {1} is controller,{0} is the action    
                 o.ViewLocationFormats.Clear();
-                o.ViewLocationFormats.Add("~/Features/{1}/{0}" + RazorViewEngine.ViewExtension);
-                o.ViewLocationFormats.Add("~/Features/Shared/{0}" + RazorViewEngine.ViewExtension);
-                o.ViewLocationFormats.Add("../../Features/Shared/{0}" + RazorViewEngine.ViewExtension);
-                o.ViewLocationFormats.Add("~/Areas/{2}/Features/{1}/{0}" + RazorViewEngine.ViewExtension);
-
+                o.ViewLocationFormats.Add("~/ClientApp/Public/Index.html");
             });
 
 
@@ -83,18 +88,23 @@ namespace Web
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
 
-            app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-            {
-                HotModuleReplacement = true
-            });
+            app.UseStaticFiles();
+
+            app.UseCookiePolicy();
+            app.UseSpaStaticFiles();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
             });
         }
     }
