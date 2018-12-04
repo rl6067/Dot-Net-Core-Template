@@ -36,13 +36,6 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -52,16 +45,8 @@ namespace Web
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "ClientApp/Public";
             });
-
-            services.Configure<RazorViewEngineOptions>(o =>
-            {
-                // {2} is area, {1} is controller,{0} is the action    
-                o.ViewLocationFormats.Clear();
-                o.ViewLocationFormats.Add("~/ClientApp/Public/Index.html");
-            });
-
 
             // automapper
             services.AddAutoMapper(typeof(Startup).GetTypeInfo().Assembly);
@@ -78,7 +63,7 @@ namespace Web
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseBrowserLink();
+
 
             }
             else
@@ -91,14 +76,15 @@ namespace Web
 
             app.UseStaticFiles();
 
-            app.UseCookiePolicy();
             app.UseSpaStaticFiles();
+
+     
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action=Index}/{id?}");
             });
 
 

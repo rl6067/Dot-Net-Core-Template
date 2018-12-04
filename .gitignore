@@ -332,3 +332,4 @@ ASALocalRun/
 wwwroot/dist/
 
 /Src/Web/wwwroot/dist
+/Src/Web/ClientApp/public/dist

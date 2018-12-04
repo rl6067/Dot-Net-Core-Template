@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="ClientApp\Public\favicon.ico" />
     <Content Include="ClientApp\Src\scss\styles.scss" />
     <Content Include="ClientApp\Src\scss\_custom.scss" />
   </ItemGroup>

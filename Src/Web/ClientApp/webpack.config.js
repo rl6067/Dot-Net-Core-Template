@@ -14,7 +14,7 @@ module.exports = function (env) {
             index: "./Src/Index.jsx"
         },
         output: {
-            path: path.join(__dirname, '../wwwroot', 'dist'),
+            path: path.join(__dirname, './Public', 'dist'),
             filename: '[name].js',
             publicPath: '/dist/'
         },

@@ -43,9 +43,9 @@
     "webpack-jquery-ui": "^2.0.1"
   },
   "scripts": {
-    "start": "rimraf wwwroot/dist/ && webpack --config webpack.config.js --watch --progress --profile",
-    "build": "rimraf wwwroot/dist/ && webpack --config webpack.config.js --progress --profile",
-    "prod": "rimraf wwwroot/dist/ && webpack --env.NODE_ENV=production --config webpack.config.js --progress"
+    "start": "rimraf ClientApp/Public/dist/ && webpack --config webpack.config.js --watch --progress --profile",
+    "build": "rimraf ClientApp/Public/dist/ && webpack --config webpack.config.js --progress --profile",
+    "prod": "rimraf ClientApp/Public/dist/ && webpack --env.NODE_ENV=production --config webpack.config.js --progress"
   },
   "author": "",
   "license": "ISC"
