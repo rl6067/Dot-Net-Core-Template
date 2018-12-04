@@ -1,5 +1,4 @@
 # .Net core project template
 
-## CQRS Pattern using MediatR and Automapper
-
-### Includes React, Webpack and various style libs.
+React SPA Client
+.Net Core 2.1 Server using CQRS pattern with autoMapper and MediatR
