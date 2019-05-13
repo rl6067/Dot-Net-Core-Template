@@ -20,10 +20,16 @@ namespace Web.Features.Home
             _mediator = mediator;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var response = await _mediator.Send(new Index.Query());
-            return View(response);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Index([FromBody]Index.Command command)
+        {
+            var response = await _mediator.Send(command);
+            return new JsonResult(response);
         }
     }
 }

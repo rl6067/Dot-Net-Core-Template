@@ -42,10 +42,13 @@ namespace Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
+            // Configure view locations
+            services.Configure<RazorViewEngineOptions>(o =>
             {
-                configuration.RootPath = "ClientApp/Public";
+                // {2} is area, {1} is controller,{0} is the action    
+                o.ViewLocationFormats.Clear();
+                o.ViewLocationFormats.Add("/Features/{1}/{0}" + RazorViewEngine.ViewExtension);
+                o.ViewLocationFormats.Add("/Features/Shared/{0}" + RazorViewEngine.ViewExtension);
             });
 
             // automapper
@@ -76,22 +79,15 @@ namespace Web
 
             app.UseStaticFiles();
 
-            app.UseSpaStaticFiles();
-
-     
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-            });
         }
     }
 }
